@@ -1,5 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 
+import { neuraldeepFile } from '../consts'
+
 
 export function saveJson(json, path) {
     const jsonStr = JSON.stringify(json);
@@ -10,8 +12,21 @@ export function readJson(path) {
     return JSON.parse(readFileSync(path, 'utf8'));
 }
 
+export function fileExists(file) {
+    return existsSync(file);
+}
+
 export function validateProject() {
-    return existsSync('./.neuraldeep');
+    return existsSync(neuraldeepFile);
+}
+
+export function validateParams(...params) {
+    for (const param of params) {
+        if(param == undefined){
+            return false;
+        }
+    }
+    return true;
 }
 
 export function validateName(name) {
