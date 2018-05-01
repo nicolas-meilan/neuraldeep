@@ -1,6 +1,6 @@
 {
   "name": "neuraldeep",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create, train, test and compare perceptron neural networks",
   "main": "index.js",
   "scripts": {
@@ -25,8 +25,9 @@
     "neuraldeep": "index.js"
   },
   "dependencies": {
-    "is-iojs": "^1.1.0",
     "commander": "^2.15.1",
+    "fs-extra": "^6.0.0",
+    "is-iojs": "^1.1.0",
     "synaptic": "^1.1.4"
   },
   "devDependencies": {

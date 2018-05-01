@@ -61,7 +61,6 @@ typings/
 .next
 
 package-lock.json
-dist/
 
 # neuraldeep files
 

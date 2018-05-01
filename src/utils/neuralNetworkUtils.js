@@ -1,5 +1,5 @@
 import { Trainer } from 'synaptic'
-import { saveJson, readJson, maxValueInArray } from './utils'
+import { saveJson, readJson } from './utils'
 
 
 export function createAndTrainNeuralNetwork(neuralNetwork, trainingData, trainingConfig={}, path) {
@@ -13,7 +13,7 @@ export function activatedOutputNeuron(output) {
     for (const iterator of output) {
         binaryOutput.push(0)
     }
-    const index = maxValueInArray(output)
+    const index = _maxValueInArray(output)
     binaryOutput[index] = 1
     const outputNeurons = {
         neurons: binaryOutput,
@@ -49,4 +49,21 @@ export function testNeuralNetwork(neuralNetwork, testData) {
 
 function _arrayEquals(arr1, arr2) {
     return JSON.stringify(arr1) != JSON.stringify(arr2)
+}
+
+function _maxValueInArray(array) {
+    if (array.length === 0) {
+        return -1
+    }
+    let max = array[0]
+    let index = 0
+    let maxArray = [0]
+    for (let i = 1; i < array.length; i++) {
+        if (array[i] > max) {
+            index = i
+            max = array[i]
+        }
+        maxArray.push(0)
+    }
+    return index
 }

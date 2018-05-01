@@ -1,0 +1,8 @@
+{
+    "testData": [
+        {"input": ["binary array"], "output": ["binary array"]},
+        {"input": ["binary array"], "output": ["binary array"]},
+        {"input": ["binary array"], "output": ["binary array"]},
+        {"input": ["binary array"], "output": ["binary array"]}
+    ]
+}
