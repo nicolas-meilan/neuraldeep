@@ -10,11 +10,11 @@ import { trainAndCreateNeuralNetwortCommand } from './commandsLogic/create';
 
 let command = false;
 
-program.version('1.0.2');
+program.version('1.0.4');
 
 program
     .command('init [name]')
-    .description('create a new neuraldeep project')
+    .description('Create a new neuraldeep project')
     .action( (name) => {
         command = true;
         if(!validateParams(name)){
@@ -25,12 +25,16 @@ program
             console.error('ERROR: Name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
-        createProjectStructure(name);
+        try {
+            createProjectStructure(name);
+        } catch (error) {
+            console.error('ERROR: ' + error.message);
+        }
     });
 
 program
     .command('create [name] [architecture...]')
-    .description('create a trained neural network')
+    .description('Create a trained neural network with training data file')
     .action( (name, architecture) => {
         command = true;
         if(!validateProject()) {
@@ -45,12 +49,19 @@ program
             console.error('ERROR: Name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
-        trainAndCreateNeuralNetwortCommand(name, architecture);
+        if (architecture.length < 3) {
+            console.error('ERROR: Architecture invalid. The architecture must have three or more layers');
+            process.exit(3);
+        }
+        if(!trainAndCreateNeuralNetwortCommand(name, architecture)){
+            console.error('ERROR: Make sure you have the training data file in its respective folder');
+            process.exit(4);
+        }
     });
 
 program
     .command('run [name] [input]')
-    .description('run a neural network')
+    .description('Run a neural network with a input')
     .action( (name, input) => {
         command = true;
         if(!validateProject()) {
@@ -69,13 +80,17 @@ program
             console.error('ERROR: Input invalid. The input must be a binary array');
             process.exit(3);
         }
-        runNeuralNetworkCommand(name, input);
+        if(!runNeuralNetworkCommand(name, input)){
+            console.error('ERROR: Make sure you have run the create command');
+            process.exit(4);
+        }
     });
 
 program
     .command('test [name]')
-    .description('test a neural network')
-    .action( (name) => {
+    .option('-e, --extensive', 'Show tests with error')
+    .description('Test a neural network with test data file')
+    .action( (name, option) => {
         command = true;
         if(!validateProject()) {
             console.error('ERROR: Go to the root of the project');
@@ -89,7 +104,10 @@ program
             console.error('ERROR: Name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
-        testNeuralNetworkCommand(name)
+        if(!testNeuralNetworkCommand(name, option.extensive)){
+            console.error('ERROR: Make sure you have run the creation command or have the test data file in your respective folder');
+            process.exit(4);
+        }
     });
 
 program.parse(process.argv);
