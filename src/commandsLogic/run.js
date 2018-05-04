@@ -10,11 +10,14 @@ import { neuralNetworkPath } from '../consts';
 export function runNeuralNetworkCommand(name, input, verbose=false) {
     const print = new Print(verbose);
     const neuralNetworkFile = neuralNetworkPath + name + '.json';
+    print.verbose('Checking if Neural Network Exist...');
     if (!fileExists(neuralNetworkFile)) {
         return false;
     }
+    print.verbose('Reading the Neural Network file...');
     const binaryInput = input.replace('[', '').replace(']','').split(',');
     const neuralNetwork = Network.fromJSON(readJson(neuralNetworkFile));
+    print.verbose('Executing the Neural Network...');
     const activationPercentage = neuralNetwork.activate(binaryInput);
     const output = activatedOutputNeuron(activationPercentage).neurons;
     print.log("----------OUTPUT----------");
