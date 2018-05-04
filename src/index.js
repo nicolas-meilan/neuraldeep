@@ -7,10 +7,13 @@ import { runNeuralNetworkCommand } from './commandsLogic/run';
 import { testNeuralNetworkCommand } from './commandsLogic/test';
 import { trainAndCreateNeuralNetwortCommand } from './commandsLogic/create';
 
+import { Print } from './utils/print';
+
 
 let command = false;
+const print = new Print();
 
-program.version('1.0.4');
+program.version('1.0.5');
 
 program
     .command('init [name]')
@@ -18,17 +21,17 @@ program
     .action( (name) => {
         command = true;
         if(!validateParams(name)){
-            console.error('ERROR: Missing parameters');
+            print.error('ERROR: Missing parameters');
             process.exit(2);
         }
         if(!validateName(name)) {
-            console.error('ERROR: Name invalid. The name must have camelCase syntax');
+            print.error('ERROR: Name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
         try {
             createProjectStructure(name);
         } catch (error) {
-            console.error('ERROR: ' + error.message);
+            print.error('ERROR: ' + error.message);
         }
     });
 
@@ -38,23 +41,23 @@ program
     .action( (name, architecture) => {
         command = true;
         if(!validateProject()) {
-            console.error('ERROR: Go to the root of the project');
+            print.error('ERROR: Go to the root of the project');
             process.exit(1);
         }
         if(!validateParams(name, architecture)){
-            console.error('ERROR: Missing parameters');
+            print.error('ERROR: Missing parameters');
             process.exit(2);
         }
         if(!validateName(name)) {
-            console.error('ERROR: Name invalid. The name must have camelCase syntax');
+            print.error('ERROR: Name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
         if (architecture.length < 3) {
-            console.error('ERROR: Architecture invalid. The architecture must have three or more layers');
+            print.error('ERROR: Architecture invalid. The architecture must have three or more layers');
             process.exit(3);
         }
         if(!trainAndCreateNeuralNetwortCommand(name, architecture)){
-            console.error('ERROR: Make sure you have the training data file in its respective folder');
+            print.error('ERROR: Make sure you have the training data file in its respective folder');
             process.exit(4);
         }
     });
@@ -65,23 +68,23 @@ program
     .action( (name, input) => {
         command = true;
         if(!validateProject()) {
-            console.error('ERROR: Go to the root of the project');
+            print.error('ERROR: Go to the root of the project');
             process.exit(1);
         }
         if(!validateParams(name, input)){
-            console.error('ERROR: Missing parameters');
+            print.error('ERROR: Missing parameters');
             process.exit(2);
         }
         if(!validateName(name)) {
-            console.error('ERROR: Name invalid. The name must have camelCase syntax');
+            print.error('ERROR: Name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
         if(!validateInputArray(input)) {
-            console.error('ERROR: Input invalid. The input must be a binary array');
+            print.error('ERROR: Input invalid. The input must be a binary array');
             process.exit(3);
         }
         if(!runNeuralNetworkCommand(name, input)){
-            console.error('ERROR: Make sure you have run the create command');
+            print.error('ERROR: Make sure you have run the create command');
             process.exit(4);
         }
     });
@@ -93,19 +96,19 @@ program
     .action( (name, option) => {
         command = true;
         if(!validateProject()) {
-            console.error('ERROR: Go to the root of the project');
+            print.error('ERROR: Go to the root of the project');
             process.exit(1);
         }
         if(!validateParams(name)){
-            console.error('ERROR: Missing parameters');
+            print.error('ERROR: Missing parameters');
             process.exit(2);
         }
         if(!validateName(name)) {
-            console.error('ERROR: Name invalid. The name must have camelCase syntax');
+            print.error('ERROR: Name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
         if(!testNeuralNetworkCommand(name, option.extensive)){
-            console.error('ERROR: Make sure you have run the creation command or have the test data file in your respective folder');
+            print.error('ERROR: Make sure you have run the creation command or have the test data file in your respective folder');
             process.exit(4);
         }
     });
@@ -113,5 +116,5 @@ program
 program.parse(process.argv);
 
 if(!command){
-    console.error('ERROR: No command given');
+    print.error('ERROR: No command given');
 }
