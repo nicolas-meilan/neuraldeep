@@ -1,4 +1,4 @@
-let program = require('commander');
+import program from 'commander';
 
 import { validateInputArray, validateName, validateParams, validateProject } from './utils/utils';
 
