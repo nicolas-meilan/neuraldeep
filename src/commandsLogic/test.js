@@ -1,7 +1,7 @@
 import { Network } from 'synaptic';
 
 import { testNeuralNetwork } from '../utils/neuralNetworkUtils';
-import { fileExists, readJson } from '../utils/utils';
+import { fileExists, readJson, clock } from '../utils/utils';
 import { Print } from '../utils/print';
 
 import { neuralNetworkPath, testDataPath } from '../consts';
@@ -21,11 +21,7 @@ export function testNeuralNetworkCommand(name, extensive, verbose) {
     const testData = readJson(testDataFile).testData;
     print.verbose('Testing the Neural Network...');
     const error = testNeuralNetwork(neuralNetwork, testData);
-    print.log("----------ERROR RATE----------");
-    print.log(error.errorRate*100  + "%");
-    print.log(error.errors + '/' + error.tests);
-    print.log("------------------------------");
-    if(extensive && error.tests != 0) {
+    if (extensive && error.tests > 0) {
         print.log('----------TESTS----------');
         for (const test of error.testsErrors) {
             print.log('Input: ' + test.input);
@@ -35,5 +31,18 @@ export function testNeuralNetworkCommand(name, extensive, verbose) {
         }
         print.log('-------------------------');
     }
+    print.log("----------ERROR RATE----------");
+    print.log(error.errorRate*100  + "%");
+    print.log(error.errors + '/' + error.tests);
+    print.log("------------------------------");
+    print.log("----------PROCESING TIME----------");
+    print.verbose('Running an example to calculate the processing time...');
+    const start = clock();
+    let duration = undefined;
+    neuralNetwork.activate(testData[0].input);
+    duration = clock(start);
+    print.log('Seconds: ' + duration.seconds);
+    print.log('Nano Seconds: ' + duration.nanoSeconds);
+    print.log("----------------------------------");
     return true;
 }

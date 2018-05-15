@@ -12,6 +12,16 @@ export function readJson(path) {
     return JSON.parse(readFileSync(path, 'utf8'));
 }
 
+export function clock(start) {
+    if (!start) return process.hrtime();
+    const end = process.hrtime(start);
+    const result = {
+        seconds: end[0],
+        nanoSeconds: end[1]
+    }
+    return result;
+}
+
 export function fileExists(file) {
     return existsSync(file);
 }

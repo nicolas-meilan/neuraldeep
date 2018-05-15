@@ -13,7 +13,7 @@ import { Print } from './utils/print';
 let command = false;
 const print = new Print();
 
-program.version('1.0.5');
+program.version('1.0.6');
 
 program
     .command('init [name]')
