@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'fs'
 
 import { neuraldeepFile } from '../consts'
 
@@ -12,6 +12,16 @@ export function readJson(path) {
     return JSON.parse(readFileSync(path, 'utf8'));
 }
 
+export function obtainFiles(path, baseName) {
+    let files = [];
+    readdirSync(path).forEach(file => {
+        const pathSplit = file.split('/');
+        if (pathSplit[pathSplit.length -1].startsWith(baseName)) {
+            files.push(file);
+        }
+    });
+    return files;
+}
 export function clock(start) {
     if (!start) return process.hrtime();
     const end = process.hrtime(start);
@@ -39,8 +49,13 @@ export function validateParams(...params) {
     return true;
 }
 
+export function validateBaseName(name) {
+    const nameRegex = /^[a-z]([0-9]|[a-z]){2,29}$/;
+    return nameRegex.test(name.toLowerCase());
+}
+
 export function validateName(name) {
-    const nameRegex = /^[a-z][a0-z9]{2,29}$/;
+    const nameRegex = /^[a-z]([0-9]|[a-z]){2,29}(_([0-9]|[a-z])+)?$/;
     return nameRegex.test(name.toLowerCase());
 }
 

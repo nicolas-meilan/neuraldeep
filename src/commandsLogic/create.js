@@ -8,9 +8,10 @@ import { neuralNetworkPath, trainingDataPath } from '../consts';
 
 
 export function trainAndCreateNeuralNetwortCommand(name, architecture, verbose=false) {
+    const nameTrainingDataFile = name.split('_')[0];
     const print = new Print(verbose);
     print.verbose('Checking if the Training Data file exists...');
-    const trainingDataFile = trainingDataPath + name + '.json';
+    const trainingDataFile = trainingDataPath + nameTrainingDataFile + '.json';
     if (!fileExists(trainingDataFile)){
         return false;
     }
