@@ -1,7 +1,8 @@
 import program from 'commander';
 
-import { validateInputArray, validateName, validateParams, validateProject } from './utils/utils';
+import { validateInputArray, validateBaseName, validateName, validateParams, validateProject } from './utils/utils';
 
+import { compareNeuralNetworkCommand } from './commandsLogic/compare';
 import { createProjectStructure } from './commandsLogic/init';
 import { runNeuralNetworkCommand } from './commandsLogic/run';
 import { testNeuralNetworkCommand } from './commandsLogic/test';
@@ -25,8 +26,8 @@ program
             print.error('ERROR: Missing parameters');
             process.exit(2);
         }
-        if(!validateName(name)) {
-            print.error('ERROR: Name invalid. The name must have camelCase syntax');
+        if(!validateBaseName(name)) {
+            print.error('ERROR: Name invalid. The project name must have the camelCase syntax');
             process.exit(3);
         }
         try {
@@ -51,7 +52,7 @@ program
             process.exit(2);
         }
         if(!validateName(name)) {
-            print.error('ERROR: Name invalid. The name must have camelCase syntax');
+            print.error('ERROR: Name invalid. The name must have the following syntax: nameCase_versionCamelCase or only nameCamelCase');
             process.exit(3);
         }
         if (architecture.length < 3) {
@@ -79,7 +80,7 @@ program
             process.exit(2);
         }
         if(!validateName(name)) {
-            print.error('ERROR: Name invalid. The name must have camelCase syntax');
+            print.error('ERROR: Name invalid. The name must have the following syntax: nameCase_versionCamelCase or only nameCamelCase');
             process.exit(3);
         }
         if(!validateInputArray(input)) {
@@ -108,11 +109,35 @@ program
             process.exit(2);
         }
         if(!validateName(name)) {
-            print.error('ERROR: Name invalid. The name must have camelCase syntax');
+            print.error('ERROR: Name invalid. The name must have the following syntax: nameCase_versionCamelCase or only nameCamelCase');
             process.exit(3);
         }
         if(!testNeuralNetworkCommand(name, option.extensive, option.verbose)){
-            print.error('ERROR: Make sure you have run the creation command or have the test data file in your respective folder');
+            print.error('ERROR: Make sure you have run the create command or have the test data file in your respective folder');
+            process.exit(4);
+        }
+    });
+
+program
+    .command('compare [baseName]')
+    .option('-v, --verbose', 'show info details')
+    .description('Compare the performance and the error rate of two or more neural networks')
+    .action((baseName, option) => {
+        command = true;
+        if (!validateProject()) {
+            print.error('ERROR: Go to the root of the project');
+            process.exit(1);
+        }
+        if (!validateParams(baseName)) {
+            print.error('ERROR: Missing parameters');
+            process.exit(2);
+        }
+        if (!validateBaseName(baseName)) {
+            print.error('ERROR: Base name invalid. The name must have camelCase syntax');
+            process.exit(3);
+        }
+        if (!compareNeuralNetworkCommand(baseName, option.verbose)) {
+            print.error('ERROR: Make sure you have two or more neural networks or have the test data file in your respective folder');
             process.exit(4);
         }
     });

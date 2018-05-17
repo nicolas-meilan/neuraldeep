@@ -1,6 +1,6 @@
 {
   "name": "neuraldeep",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Create, train, test and compare perceptron neural networks",
   "main": "index.js",
   "scripts": {
