@@ -6,7 +6,7 @@ import { Print } from '../utils/print';
 
 import { neuralNetworkPath, testDataPath } from '../consts';
 
-export function compareNeuralNetworkCommand(baseNameNeuralNetworks, verbose) {
+export function compareNeuralNetworkCommand(baseNameNeuralNetworks, top, verbose) {
     const print = new Print(verbose);
     print.verbose('Checking if the Neural Networks exist...');
     const neuralNetworks = obtainFiles(neuralNetworkPath, baseNameNeuralNetworks);
@@ -46,13 +46,14 @@ export function compareNeuralNetworkCommand(baseNameNeuralNetworks, verbose) {
         }
         return deltaErrors;
     });
+    const iterations = top != undefined ? top : results.length;
     print.log("----------TOP NEURAL NETWORKS----------\n");
-    for (const neuralNetworkResults of results) {
-        print.log('Neural Network Name: ' + neuralNetworkResults.name + '\n');
-        print.log('Error Rate: ' + neuralNetworkResults.error.errorRate * 100 + "%");
+    for (let index = 0; index < iterations; index++) {
+        print.log('Neural Network Name: ' + results[index].name + '\n');
+        print.log('Error Rate: ' + results[index].error.errorRate * 100 + "%");
         print.log('----------Performance----------');
-        print.log('Seconds: ' + neuralNetworkResults.performance.seconds);
-        print.log('Nano Seconds: ' + neuralNetworkResults.performance.nanoSeconds);
+        print.log('Seconds: ' + results[index].performance.seconds);
+        print.log('Nano Seconds: ' + results[index].performance.nanoSeconds);
         print.log('-------------------------------');
     }
     return true;

@@ -67,7 +67,6 @@ package-lock.json
 dist/
 
 # neuraldeep files
-
 testData/
 trainingData/
 neuralNetwork/

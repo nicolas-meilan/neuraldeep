@@ -14,7 +14,7 @@ import { Print } from './utils/print';
 let command = false;
 const print = new Print();
 
-program.version('1.1.2');
+program.version('1.1.3');
 
 program
     .command('init [name]')
@@ -120,7 +120,8 @@ program
 
 program
     .command('compare [baseName]')
-    .option('-v, --verbose', 'show info details')
+    .option('-t, --top <items>', 'Show the betters neural networks')
+    .option('-v, --verbose', 'Show info details')
     .description('Compare the performance and the error rate of two or more neural networks')
     .action((baseName, option) => {
         command = true;
@@ -136,7 +137,7 @@ program
             print.error('ERROR: Base name invalid. The name must have camelCase syntax');
             process.exit(3);
         }
-        if (!compareNeuralNetworkCommand(baseName, option.verbose)) {
+        if (!compareNeuralNetworkCommand(baseName, option.top, option.verbose)) {
             print.error('ERROR: Make sure you have two or more neural networks or have the test data file in your respective folder');
             process.exit(4);
         }

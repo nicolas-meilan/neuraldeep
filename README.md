@@ -74,3 +74,5 @@ Now yo can create, train, test and compare easly diferents **secuential** neural
 ```neuraldeep compare <baseName>```
 
 * **baseName:** The name of the test data file and the base name of the neural networks.
+
+* This command has the **top** option (**-t** or **--top**) whitch recive the neural items number and show a ranking table until the last item number.

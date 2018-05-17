@@ -64,7 +64,9 @@ package-lock.json
 .gitignore
 
 # neuraldeep files
-
 testData/
 trainingData/
 neuralNetwork/
+
+# example files
+example/
