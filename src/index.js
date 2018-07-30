@@ -14,7 +14,7 @@ import { Print } from './utils/print';
 let command = false;
 const print = new Print();
 
-program.version('1.1.3');
+program.version('1.1.4');
 
 program
     .command('init [name]')

@@ -1,6 +1,6 @@
 {
   "name": "neuraldeep",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Create, train, test and compare perceptron neural networks",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "deep learning",
     "perceptron",
     "machine learning",
-    "neural network"
+    "neural network",
+    "artificial inteligence",
+    "cli"
   ],
   "author": "Nicolas Meilan <sebastian.nicolas.meilan@gmail.com>",
   "license": "MIT",
