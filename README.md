@@ -2,6 +2,8 @@
 
 Now yo can create, train, test and compare easly diferents **secuential** neural networks with diferents architectures for select the architecture that better solve your problems.**NeuralDeep** allow to see the performance and the error rate of differents neural networks and compare these with a ranking table. Also you can to export your neural networks to a json file to use with **Synaptic**.
 
+- The neural networks only can recive **binary inputs** and only send **binary outputs**.
+
 **NeuralDeep** is a **console interface** based in the library of deep learning named: [**Synaptic**](https://www.npmjs.com/package/synaptic).
 
 ## Index
@@ -24,25 +26,33 @@ Now yo can create, train, test and compare easly diferents **secuential** neural
 
 ## Use
 
-1. Create a **neuraldeep** project:
+1. Create a **neuraldeep** project: 
 
 ```neuraldeep init <projectName>```
+
+- **projectName**: String with the name of the project (One project can contain multiples neural networks).
 
 2. Go to the root of the project:
 
 ```cd <projectName>```
 
-3. Now you can start using **neuraldeep**.
+3. Now you can start using **neuraldeep**. 
+
+For use this CI, first of all you must **create** a neural network, making a datasheet [more info...](#train-and-create-a-new-neural-network)
+
+Then you can [**execute**](#execute-a-neural-network), [**test**](#test-a-neural-network) and [**compare**](#compare-two-or-more-neural-networks) the neural networks.
 
 ## Train and Create a new Neural Network
 
 1. First of all you have to create the training data to train the neural network, so you have to create a training data file in the **trainingData folder**, following the syntax of the **training data file example**.
+- The name of the **trainingData file** must be the same name of the **neural network**.
 2. Now to create the network, you must execute the following command: 
 
 ```neuraldeep create <name> <architecture>```
 
 * **name:** The name of the **Neural Network** and the **Training Data File**.
 * **architecture:** The **Architecture** of the **Neural Network**. Input,deep and output **neurons**.
+* **example:** ```neuraldeep create neuralNetwork1 20 4 4 2```. This command creates a neural network named **neuralNetwork1** with 20 **input neurons**, two **hidden layers** with 4 neurons and two **output neurons**.
 
 * The **Neural Network** is saved in the **neuralNetwork** folder.
 
@@ -58,6 +68,7 @@ Now yo can create, train, test and compare easly diferents **secuential** neural
 ## Test a Neural Network
 
 1. First of all you have to create a neural network (with **neuraldeep create**) and the test data to test it, so you have to create a test data file in the **testData folder**, following the syntax of the **test data file example**.
+- The name of the **testData file** must be the same name of the **neural network**.
 2. Now to test the network, you must execute the following command:
 
 ```neuraldeep test <name>```
